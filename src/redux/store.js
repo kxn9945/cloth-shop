@@ -6,7 +6,9 @@ import rootReducer from './rootReducer';
 
 import {persistStore} from 'redux-persist';
 
-const middleWares = [];
+import thunk from 'redux-thunk';
+
+const middleWares = [thunk];
 
 if(process.env.NODE_ENV === 'development'){
   middleWares.push(logger);
