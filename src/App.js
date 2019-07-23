@@ -12,6 +12,7 @@ import {createStructuredSelector} from 'reselect';
 import {selectCurrentUser} from './redux/user/userSelector';
 
 import CheckoutPage from './pages/checkout/checkout';
+import {selectCollectionsForPreview} from './redux/shop/shopSelector';
 
 class App extends React.Component {
 
@@ -38,6 +39,7 @@ class App extends React.Component {
         };
 
       setCurrentUser(userAuth)
+      //addCollectionAndDocuments('collections',collectionsArray.map(({title, items}) => ({title,items})));
     });
   }
 
@@ -59,7 +61,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps =  createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = dispatch => ({
