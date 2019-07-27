@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import HomePage from './pages/homepage/homepage';
 import {Switch, Route, Redirect} from 'react-router-dom';
@@ -15,54 +15,21 @@ import CheckoutPage from './pages/checkout/checkout';
 import {checkUserSession} from './redux/user/userAction';
 //import {selectCollectionsForPreview} from './redux/shop/shopSelector';
 
-class App extends React.Component {
-
-
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-      // const {setCurrentUser} = this.props;
-
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   //this.setState({ currentUser: user });
-    //   //createUserProfileDocument(user);
-    //   //console.log(user);
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-    //
-    //     userRef.onSnapshot(snapShot => {
-    //       //console.log(snapShot.data());
-    //       setCurrentUser({
-    //           id: snapShot.id,
-    //           ...snapShot.data()
-    //         });
-    //       })
-    //     };
-    //
-    //   setCurrentUser(userAuth)
-      //addCollectionAndDocuments('collections',collectionsArray.map(({title, items}) => ({title,items})));
-    // });
-
-    const {checkUserSession} = this.props;
-
+const App = ({checkUserSession, currentUser}) =>{
+  useEffect(() => {
     checkUserSession();
-  }
+  }, [checkUserSession]);
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
     return (<div>
       <Header/>
       <Switch>
         <Route exact path='/' component={HomePage}/>
         <Route path='/shop' component={ShopPage}/>
         <Route exact path='/checkout' component={CheckoutPage}/>
-        <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)}/>
+        <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)}/>
       </Switch>
     </div>);
-  }
+
 }
 
 const mapStateToProps =  createStructuredSelector({
